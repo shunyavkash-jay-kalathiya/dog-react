@@ -5,6 +5,7 @@ import { OrbitControls, useAnimations, useGLTF, useTexture } from "@react-three/
 import { color, normalMap } from "three/tsl";
 import { useEffect } from "react";
 
+
 function Dog() {
   const model = useGLTF("/models/dog.drc.glb");
 
