@@ -9,11 +9,184 @@ body,
 #root {
   height: 100%;
   width: 100%;
-  background-color: black;
+  font-family: "DM Serif Display", serif;
 }
 
-/* .sec {
-  height: 100vh;
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.sec {
+  position: relative;
+  z-index: 2;
   width: 100%;
   border: 1px solid white;
-} */
+}
+
+main #canvas-item {
+  height: 100vh;
+  width: 100vh;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+}
+
+main #canvas-item::after {
+  content: " ";
+  position: absolute;
+  z-index: 2;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-image: url(../public/background-l.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.5s linear;
+}
+
+main:has(#sec-2 .title-item:hover) #canvas-item::after {
+  opacity: 0;
+}
+
+.images {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all 0.3s linear;
+  }
+}
+
+#sec-1 {
+  height: 100vh;
+  h1 {
+    color: white;
+    line-height: 1.1;
+    font-size: 60px;
+    font-family: "DM Serif Display", serif;
+  }
+  .top,
+  .bottom {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+  }
+  .top {
+    .left {
+      padding-block: 100px;
+      width: 50%;
+      text-align: end;
+    }
+    .right {
+      width: 50%;
+    }
+  }
+  .bottom {
+    .left {
+      width: 50%;
+      text-align: end;
+    }
+    .right {
+      width: 50%;
+      p {
+        max-width: 246px;
+        color: white;
+        line-height: 1.4;
+        font-weight: 300;
+      }
+    }
+  }
+}
+
+#sec-2 {
+  padding-block: 120px;
+  .container {
+    max-width: 1280px;
+    padding-inline: 20px;
+    margin-inline: auto;
+  }
+  .titles {
+    display: flex;
+    flex-direction: column;
+  }
+  .title-item {
+    display: flex;
+    gap: 60px;
+    opacity: 0.3;
+    padding-block: 2rem;
+    transition: all 0.3s linear;
+    text-decoration: none;
+  }
+  .small-title {
+    font-family: system-ui, sans-serif;
+    color: #ffffff;
+    margin-top: 0.6rem;
+    font-size: 12px;
+  }
+  .title-main {
+    font-size: 4.5rem;
+    font-family: system-ui, sans-serif;
+    font-weight: 100;
+    line-height: 1;
+    color: #ffffff;
+  }
+}
+#sec-3 {
+  height: 100vh;
+}
+
+/* hover 1 */
+main:has(#sec-2 .title-item[img-title="tommorowland"]:hover) .images #tommorowland{
+  opacity: 1;
+  background-color: rgba(4, 7, 24);
+}
+
+/* hover 2 */
+main:has(#sec-2 .title-item[img-title="navy-pier"]:hover) .images #navy-pier{
+  opacity: 1;
+  background-color: rgba(4, 7, 24);
+}
+
+/* hover 3 */
+main:has(#sec-2 .title-item[img-title="msi-chicago"]:hover) .images #msi-chicago{
+  opacity: 1;
+  background-color: rgba(4, 7, 24);
+}
+
+/* hover 4 */
+main:has(#sec-2 .title-item[img-title="phone"]:hover) .images #phone{
+  opacity: 1;
+  background-color: rgba(4, 7, 24);
+}
+
+/* hover 5 */
+main:has(#sec-2 .title-item[img-title="kikk"]:hover) .images #kikk{
+  opacity: 1;
+  background-color: rgba(1, 15, 92, 0.679);
+}
+
+/* hover 6 */
+main:has(#sec-2 .title-item[img-title="kennedy"]:hover) .images #kennedy{
+  opacity: 1;
+  background-color: rgba(4, 7, 24);
+}
+
+/* hover 7 */
+main:has(#sec-2 .title-item[img-title="opera"]:hover) .images #opera{
+  opacity: 1;
+   background-color: rgb(176, 4, 4);
+}
