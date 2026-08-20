@@ -20,8 +20,6 @@ main {
 .sec {
   position: relative;
   z-index: 2;
-  width: 100%;
-  border: 1px solid white;
 }
 
 main #canvas-item {
@@ -30,6 +28,7 @@ main #canvas-item {
   position: fixed !important;
   top: 0;
   left: 0;
+  z-index: 0;
 }
 
 main #canvas-item::after {
@@ -74,10 +73,11 @@ main:has(#sec-2 .title-item:hover) #canvas-item::after {
 #sec-1 {
   height: 100vh;
   h1 {
-    color: white;
+    color: rgba(255, 255, 255, 0.672);
     line-height: 1.1;
     font-size: 60px;
-    font-family: "DM Serif Display", serif;
+    font-weight: 600;
+    font-family: system-ui, sans-serif;
   }
   .top,
   .bottom {
@@ -103,8 +103,9 @@ main:has(#sec-2 .title-item:hover) #canvas-item::after {
     .right {
       width: 50%;
       p {
+        font-family: system-ui, sans-serif;
         max-width: 246px;
-        color: white;
+        color: rgba(255, 255, 255, 0.541);
         line-height: 1.4;
         font-weight: 300;
       }
@@ -131,11 +132,18 @@ main:has(#sec-2 .title-item:hover) #canvas-item::after {
     transition: all 0.3s linear;
     text-decoration: none;
   }
+
+  .title-item:hover{
+        opacity: 1;
+  }
+  
   .small-title {
     font-family: system-ui, sans-serif;
     color: #ffffff;
     margin-top: 0.6rem;
     font-size: 12px;
+    min-width: 100px;
+    display: block;
   }
   .title-main {
     font-size: 4.5rem;
@@ -145,48 +153,91 @@ main:has(#sec-2 .title-item:hover) #canvas-item::after {
     color: #ffffff;
   }
 }
+
 #sec-3 {
   height: 100vh;
+  z-index: 0;
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+    z-index: -1;
+    .left,
+    .right {
+      width: 50%;
+    }
+    h3 {
+      font-family: system-ui, sans-serif;
+      color: #ffffff;
+      font-size: 38px;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+  }
+  .bottom {
+    display: flex;
+    align-items: center;
+
+    .left,
+    .right {
+      width: 50%;
+    }
+    p {
+      font-family: system-ui, sans-serif;
+      color: #ffffff;
+      opacity: 0.7;
+      font-weight: 200;
+    }
+  }
+  .container {
+    padding-inline: 20px;
+    margin-inline: auto;
+    width: 100%;
+    max-width: 890px;
+    padding-block: 100px;
+    height: 100%;
+  }
 }
 
 /* hover 1 */
-main:has(#sec-2 .title-item[img-title="tommorowland"]:hover) .images #tommorowland{
+main:has(#sec-2 .title-item[img-title="tommorowland"]:hover) .images #tommorowland {
   opacity: 1;
   background-color: rgba(4, 7, 24);
 }
 
 /* hover 2 */
-main:has(#sec-2 .title-item[img-title="navy-pier"]:hover) .images #navy-pier{
+main:has(#sec-2 .title-item[img-title="navy-pier"]:hover) .images #navy-pier {
   opacity: 1;
   background-color: rgba(4, 7, 24);
 }
 
 /* hover 3 */
-main:has(#sec-2 .title-item[img-title="msi-chicago"]:hover) .images #msi-chicago{
+main:has(#sec-2 .title-item[img-title="msi-chicago"]:hover) .images #msi-chicago {
   opacity: 1;
   background-color: rgba(4, 7, 24);
 }
 
 /* hover 4 */
-main:has(#sec-2 .title-item[img-title="phone"]:hover) .images #phone{
+main:has(#sec-2 .title-item[img-title="phone"]:hover) .images #phone {
   opacity: 1;
   background-color: rgba(4, 7, 24);
 }
 
 /* hover 5 */
-main:has(#sec-2 .title-item[img-title="kikk"]:hover) .images #kikk{
+main:has(#sec-2 .title-item[img-title="kikk"]:hover) .images #kikk {
   opacity: 1;
   background-color: rgba(1, 15, 92, 0.679);
 }
 
 /* hover 6 */
-main:has(#sec-2 .title-item[img-title="kennedy"]:hover) .images #kennedy{
+main:has(#sec-2 .title-item[img-title="kennedy"]:hover) .images #kennedy {
   opacity: 1;
   background-color: rgba(4, 7, 24);
 }
 
 /* hover 7 */
-main:has(#sec-2 .title-item[img-title="opera"]:hover) .images #opera{
+main:has(#sec-2 .title-item[img-title="opera"]:hover) .images #opera {
   opacity: 1;
-   background-color: rgb(176, 4, 4);
+  background-color: rgb(176, 4, 4);
 }
