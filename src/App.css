@@ -72,15 +72,35 @@ main:has(#sec-2 .title-item:hover) #canvas-item::after {
 
 #sec-1 {
   height: 100vh;
+  .line-1 {
+    position: absolute;
+    width: 33%;
+    height: 1px;
+    background-color: #ff0000;
+    bottom: 30%;
+    transform: rotate(43deg);
+    left: 12%;
+  }
+  .line-2 {
+    position: absolute;
+    width: 10%;
+    height: 1px;
+    background-color: #ff0000;
+    bottom: 30%;
+    transform: rotate(-43deg);
+    right: 12%;
+  }
+
   h1 {
     color: rgba(255, 255, 255, 0.672);
     line-height: 1.1;
-    font-size: 60px;
+    font-size: 70px;
     font-weight: 600;
     font-family: system-ui, sans-serif;
   }
   .top,
   .bottom {
+    position: relative;
     display: flex;
     gap: 30px;
     align-items: center;
@@ -133,10 +153,10 @@ main:has(#sec-2 .title-item:hover) #canvas-item::after {
     text-decoration: none;
   }
 
-  .title-item:hover{
-        opacity: 1;
+  .title-item:hover {
+    opacity: 1;
   }
-  
+
   .small-title {
     font-family: system-ui, sans-serif;
     color: #ffffff;
@@ -240,4 +260,56 @@ main:has(#sec-2 .title-item[img-title="kennedy"]:hover) .images #kennedy {
 main:has(#sec-2 .title-item[img-title="opera"]:hover) .images #opera {
   opacity: 1;
   background-color: rgb(176, 4, 4);
+}
+
+@media only screen and (max-width: 991.99px) {
+  #sec-1 {
+    .line-2 {
+      display: none;
+    }
+    h1 {
+      color: rgba(255, 255, 255, 0.672);
+      line-height: 1.1;
+      font-size: 56px;
+    }
+  }
+  #sec-2 {
+    .title-main {
+      font-size: 41px;
+    }
+    .title-item {
+      gap: 30px;
+      padding-block: 14px;
+    }
+  }
+  #sec-3 {
+    .top {
+      h3 {
+        font-family: system-ui, sans-serif;
+        color: #ffffff;
+        font-size: 30px;
+        font-weight: 500;
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 991.99px) {
+  #sec-3 {
+    .top {
+      flex-direction: column;
+      .left,
+      .right {
+        width: 100%;
+      }
+    }
+    .bottom {
+      flex-direction: column;
+      .left,
+      .right {
+        width: 100%;
+      }
+    }
+  }
 }

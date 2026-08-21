@@ -1,7 +1,6 @@
-
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, useAnimations, useGLTF, useTexture } from "@react-three/drei";
 import { color, normalMap } from "three/tsl";
 import gsap from "gsap";
@@ -59,7 +58,7 @@ function Dog() {
     matcap: mat2,
   });
 
-  const branchMaterial = new THREE.MeshMatcapMaterial({
+  const branchMaterial = new THREE.MeshStandardMaterial({
     normalMap: branchNormalMap,
     map: branchMap,
   });
@@ -96,6 +95,54 @@ function Dog() {
     );
   }
 
+  function onBeforeCompileBranch(shader) {
+    shader.uniforms.uMatcapTexture1 = material.current.uMatcap1;
+    shader.uniforms.uMatcapTexture2 = material.current.uMatcap2;
+    shader.uniforms.uProgress = material.current.uProgress;
+
+    shader.fragmentShader = shader.fragmentShader.replace(
+      "#include <map_pars_fragment>",
+      `
+      #include <map_pars_fragment>
+
+      uniform sampler2D uMatcapTexture1;
+      uniform sampler2D uMatcapTexture2;
+      uniform float uProgress;
+    `,
+    );
+
+    shader.fragmentShader = shader.fragmentShader.replace(
+      "#include <map_fragment>",
+      `
+      vec4 texelColor1 = texture2D(
+        uMatcapTexture1,
+        vMapUv
+      );
+
+      vec4 texelColor2 = texture2D(
+        uMatcapTexture2,
+        vMapUv
+      );
+
+      float transitionFactor = 0.0;
+
+      float progress = smoothstep(
+        uProgress - transitionFactor,
+        uProgress,
+        (vViewPosition.x + vViewPosition.y) * 0.5 + 0.5
+      );
+
+      vec4 transitionColor = mix(
+        texelColor2,
+        texelColor1,
+        progress
+      );
+
+      diffuseColor *= transitionColor;
+    `,
+    );
+  }
+
   model.scene.traverse((child) => {
     if (child.name.includes("DOG")) {
       child.material = dogMaterial;
@@ -104,14 +151,36 @@ function Dog() {
     }
   });
   dogMaterial.onBeforeCompile = onBeforeCompile;
-  const dogModel = useRef(model);
+  branchMaterial.onBeforeCompile = onBeforeCompileBranch;
 
+  
+  // const mouse = useRef({ x: 0, y: 0 });
+  // const targetMouse = useRef({ x: 0, y: 0 });
+
+  
+
+
+  const dogModel = useRef(model);
+  const mouse = new THREE.Vector2();
+  const target = new THREE.Vector3();
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: "#sec-1",
         start: "top top",
-        markers: true,
         scrub: true,
         endTrigger: "#sec-3",
         end: "bottom bottom",
@@ -141,7 +210,59 @@ function Dog() {
         "third",
       );
   }, []);
+const dogGroup = useRef();
 
+useGSAP(() => {
+  const handleMouseMove = (e) => {
+    const x = (e.clientX / window.innerWidth) * 2 - 1;
+    const y = (e.clientY / window.innerHeight) * 2 - 1;
+
+    gsap.to(dogGroup.current.rotation, {
+      x: -y * 0.08,
+      y: x * 0.12,
+      z: -x * 0.03,
+      duration: 0.8,
+      ease: "power3.out",
+      overwrite: true,
+    });
+
+    gsap.to(dogGroup.current.position, {
+      x: x * 0.06,
+      y: -y * 0.04,
+      z: Math.abs(x) * 0.02,
+      duration: 0.8,
+      ease: "power3.out",
+      overwrite: true,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    gsap.to(dogGroup.current.rotation, {
+      x: 0,
+      y: 0,
+      z: 0,
+      duration: 1,
+      ease: "power3.out",
+    });
+
+    gsap.to(dogGroup.current.position, {
+      x: 0,
+      y: 0,
+      z: 0,
+      duration: 1,
+      ease: "power3.out",
+    });
+  };
+
+  window.addEventListener("mousemove", handleMouseMove);
+  window.addEventListener("mouseleave", handleMouseLeave);
+
+  return () => {
+    window.removeEventListener("mousemove", handleMouseMove);
+    window.removeEventListener("mouseleave", handleMouseLeave);
+  };
+}, []);
+  
   useEffect(() => {
     document.querySelector(`.title-item[img-title="tommorowland"]`).addEventListener("mouseenter", () => {
       material.current.uMatcap1.value = mat19;
@@ -153,7 +274,6 @@ function Dog() {
           material.current.uProgress.value = 1.0;
         },
       });
-    
     });
     document.querySelector(`.title-item[img-title="navy-pier"]`).addEventListener("mouseenter", () => {
       material.current.uMatcap1.value = mat8;
@@ -238,7 +358,10 @@ function Dog() {
 
   return (
     <>
+      <group ref={dogGroup}>
       <primitive object={model.scene} position={[0.25, -0.55, 0]} rotation={[0, Math.PI / 3.9, 0]} />
+        
+        </group>
       <directionalLight position={[0, 5, 5]} color={0xffffff} intensity={10} />
       {/* <OrbitControls /> */}
     </>

@@ -39,12 +39,20 @@ function App() {
           <img id="kennedy" src="/kennedy.png" alt="kennedy" />
           <img id="opera" src="/opera.png" alt="opera" />
         </div>
-        <Canvas id="canvas-item">
+        <Canvas
+          id="canvas-item"
+          camera={{
+            position: [0, 0, 0.55],
+            fov: 80,
+          }}
+        >
           <Dog />
         </Canvas>
         <section className="sec" id="sec-1">
           <div className="top">
+            <span className="line-1"></span>
             <div className="left">
+              <span className="line-2"></span>
               <h1>
                 We
                 <br />
