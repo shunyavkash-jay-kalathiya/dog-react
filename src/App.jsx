@@ -58,10 +58,9 @@ function App() {
                 <br />
                 Make
                 <br />
-                Good
+                Cool
                 <br />
-                Shit
-                <br />
+                Stuff
               </h1>
             </div>
             <div className="right"></div>
